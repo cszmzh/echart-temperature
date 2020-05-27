@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>温度</title>
+    <script src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/j.query-minjs"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<!--导航栏-->
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="https://www.515code.com/" target="_blank">首页</a></li>
+    <li role="presentation"><a href="https://hao.515code.com/" target="_blank">导航</a></li>
+</ul>
+<div class="page-header">
+    <h1 style="margin-left: 20px">515code温度监测应用 <small>温度</small></h1>
+</div>
+
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <a href="yibiao.html" class="btn btn-warning" style="left: 150px;position: absolute">仪表盘</a>
+    <br><br>
+    <a href="zhexian.html" class="btn btn-warning" style="left: 150px;position: absolute">最近一小时温度变化曲线</a>
+    <br><br>
+    <a href="zhifang.html" class="btn btn-warning" style="left: 150px;position: absolute">七天前每日平均温度</a>
+    <p >
+    <div class="main">
+
+    <div id="p2" class="alert alert-danger" role="alert" style="margin: 50px;display:none">高温报警</div>
+    </div>
+    <style type="text/css">
+        .main{
+            color: red;margin-top: 10px;
+            margin-left: 20px;
+        }
+        .main span {
+            font-weight:bold;
+            color:red;
+            font-size: 30px;
+        }
+        /* 定义keyframe动画，命名为blink */
+        @keyframes blink{
+            0%{opacity: 1;}
+            100%{opacity: 0;}
+        }
+        /* 添加兼容性前缀 */
+        @-webkit-keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @-moz-keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @-ms-keyframes blink {
+            0% {opacity: 1; }
+            100% { opacity: 0;}
+        }
+        @-o-keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        /* 定义blink类*/
+        .blink{
+            color: #dd4814;
+            animation: blink 1s linear infinite;
+            /* 其它浏览器兼容性前缀 */
+            -webkit-animation: blink 1s linear infinite;
+            -moz-animation: blink 1s linear infinite;
+            -ms-animation: blink 1s linear infinite;
+            -o-animation: blink 1s linear infinite;
+        }
+    </style>
+    <!--<p id="p2" style="font-size:40px;color:red"></p>-->
+    <script type="text/javascript">
+        var baojing=0;
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var colorTemplate1 = [[0.3, "rgba(0,255,0,0.8)"], [0.7, "rgba(255,0,0,0.8)"], [1, "rgba(0,255,0,0.8)"]];
+        // 指定图表的配置项和数据
+        option = {
+            tooltip: {
+                formatter: '{a} <br/>{b} : {c}%'
+            },
+            series: [
+                {
+                    name: '温度显示',
+                    type: 'gauge',
+                    min: 15,
+                    max: 25,
+                    detail: {formatter: '{value}℃'},
+                    data: [{value: 20, name: '温度'}],
+
+                    axisLine: {				// 仪表盘轴线(轮廓线)相关配置。
+                        show: true,				// 是否显示仪表盘轴线(轮廓线),默认 true。
+                        lineStyle: {			// 仪表盘轴线样式。
+                            color: colorTemplate1, 	//仪表盘的轴线可以被分成不同颜色的多段。每段的  结束位置(范围是[0,1]) 和  颜色  可以通过一个数组来表示。默认取值：[[0.2, '#91c7ae'], [0.8, '#63869e'], [1, '#c23531']]
+                            opacity: 1,					//图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                            width: 30,					//轴线宽度,默认 30。
+                            shadowBlur: 20,				//(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: "#fff"		//阴影颜色。支持的格式同color。
+                        }
+                    }
+                }
+            ]
+        };
+
+        setInterval(function () {
+            var value_data=(15+Math.random() * 10).toFixed(2) - 0;
+            option.series[0].data[0].value = value_data;
+           if (value_data>=18&&value_data<=22){
+               baojing++;
+           }
+           if (baojing==1){
+               var obj = document.getElementById("p2");
+               obj.style.display="block";
+           }
+            myChart.setOption(option, true);
+
+            $.ajax({
+                url:"http://localhost:8080/save",
+                type:"post",
+                datatype:"json",
+                data:{
+                    temperature:value_data
+                },
+                success:function (result) {
+
+                },error:function () {
+                    alert("fault");
+                }
+            });
+
+        },5000);
+    </script>
+</body>
+</html>

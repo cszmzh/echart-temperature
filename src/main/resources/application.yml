@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.106.196.52:3306/zengxiangxin?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
+    username: zeng
+    password: Zxx123456!
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mvc:
+    view:
+      prefix: classpath:/templates/
+

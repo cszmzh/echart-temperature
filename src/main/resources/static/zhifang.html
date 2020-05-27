@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一周内每日平均温度</title>
+    <script src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/jquery-min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<!--导航栏-->
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="https://www.515code.com/" target="_blank">首页</a></li>
+    <li role="presentation"><a href="https://hao.515code.com/" target="_blank">导航</a></li>
+</ul>
+<div class="page-header">
+    <h1 style="margin-left: 20px">515code温度监测应用 <small>一周内每日平均温度</small></h1>
+</div>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <a href="yibiao.html"  class="btn btn-warning" style="left: 150px;position: absolute">仪表盘</a>
+    <br><br><br>
+    <a href="zhexian.html"  class="btn btn-warning" style="left: 150px;position: absolute">最近一小时温度变化曲线</a>
+    <br><br><br>
+    <a href="zhifang.html"  class="btn btn-warning" style="left: 150px;position: absolute">七天前每日平均温度</a>
+    <script type="text/javascript">
+        $.ajax({
+            url:"http://localhost:8080/zhifang",
+            type:"post",
+            datatype:"json",
+            data:{
+            },
+            success:function (result) {
+                if(result){
+                    var myChart = echarts.init(document.getElementById('main'));
+                    option = {
+                        xAxis: {
+                            type: 'category',
+                            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            data: result,
+                            type: 'bar',
+                            showBackground: true,
+                            backgroundStyle: {
+                                color: 'pink'
+                            }
+                        }]
+                    };
+                    myChart.setOption(option, true);
+                }
+            },error:function () {
+                alert("获取失败");
+            }
+        });
+
+    </script>
+</body>
+</html>
