@@ -1,18 +1,6 @@
-/*
- Navicat Premium Data Transfer
+将以下内容放入.sql文件中直接用navicat导入即可
 
- Source Server         : 阿里云DB
- Source Server Type    : MySQL
- Source Server Version : 50729
- Source Host           : 39.106.196.52:3306
- Source Schema         : zengxiangxin
-
- Target Server Type    : MySQL
- Target Server Version : 50729
- File Encoding         : 65001
-
- Date: 27/05/2020 12:37:09
-*/
+~~~sql
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -836,3 +824,5 @@ INSERT INTO `week_average` VALUES (7, 6, 20.330555555555552);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+~~~
+
