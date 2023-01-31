@@ -12,8 +12,8 @@
 
 ## 二.项目截图
 
-<img src="https://yun.515code.com/github/echart-temperature/1.png" style="zoom:33%;" />
+<img src="https://yun.515code.com/r-img/1675140746320VHh5KP.png" style="zoom:33%;" />
 
-<img src="https://yun.515code.com/github/echart-temperature/2.png" style="zoom:33%;" />
+<img src="https://yun.515code.com/r-img/1675140767015ZW6Rxe.png" style="zoom:33%;" />
 
-<img src="https://yun.515code.com/github/echart-temperature/3.png" style="zoom:33%;" />
+<img src="https://yun.515code.com/r-img/1675140786418Mt6YDr.png" style="zoom:33%;" />
